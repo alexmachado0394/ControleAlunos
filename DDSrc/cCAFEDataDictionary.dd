@@ -3,6 +3,8 @@ Use DataDict.pkg
 Open CAFE
 Open SYSTEM
 
+Register_Object cafe_sl
+
 Class cCAFEDataDictionary is a DataDictionary
     
     Procedure Construct_Object
@@ -18,6 +20,7 @@ Class cCAFEDataDictionary is a DataDictionary
         Set Field_Auto_Increment Field CAFE.CODIGO to File_Field SYSTEM.ULTIMOCAFE
         Set Key_Field_State Field CAFE.CODIGO to True
         Set Field_Option Field CAFE.CODIGO DD_AUTOFIND to True
+        Set Field_Prompt_Object Field CAFE.CODIGO to cafe_sl
 
         Set Field_Option Field CAFE.DESCRICAO DD_CAPSLOCK to True
         Set Field_Option Field CAFE.DESCRICAO DD_REQUIRED to True
@@ -27,3 +30,8 @@ Class cCAFEDataDictionary is a DataDictionary
     End_Procedure
 
 End_Class
+
+#IFDEF Is$WebApp
+#ELSE
+Use cafe.sl
+#ENDIF

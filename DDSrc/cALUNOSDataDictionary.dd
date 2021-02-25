@@ -37,8 +37,6 @@ Class cALUNOSDataDictionary is a DataDictionary
         Set Field_Option Field ALUNOS.SOBRENOME DD_CAPSLOCK to True
         Set Field_Option Field ALUNOS.SOBRENOME DD_REQUIRED to True
 
-        Set Field_Value_Table Field ALUNOS.GENERO to Genero
-
     End_Procedure
 
 End_Class

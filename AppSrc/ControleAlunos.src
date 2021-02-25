@@ -6,6 +6,7 @@ End_Object
 
 Object oApplication is a cApplication
     Set peHelpType to htHtmlHelp
+    Set pbEnterKeyAsTabKey to True
 
     Object oConnection is a cConnection
         Use LoginEncryption.pkg
@@ -96,12 +97,12 @@ Object oMain is a Panel
 
             Object oViewMenu is a cCJMenuItem
                 Set peControlType to xtpControlPopup
-                Set psCaption to "&View"
-                Set psToolTip to "View"
+                Set psCaption to "&Cadastros"
+                Set psToolTip to "Cadastros"
                 Set psDescription to "Available Views"
 
                 Object oalunosMenuItem is a cCJMenuItem
-                    Set psCaption to "Cadastro Alunos"
+                    Set psCaption to "Alunos"
                     Set psTooltip to "alunos"
                 
                     Procedure OnExecute Variant vCommandBarControl
@@ -112,13 +113,24 @@ Object oMain is a Panel
                 End_Object
 
                 Object osalaMenuItem is a cCJMenuItem
-                    Set psCaption to "Cadastro Salas"
+                    Set psCaption to "Salas"
                     Set psTooltip to "sala"
                 
                     Procedure OnExecute Variant vCommandBarControl
                         Handle hoClient
                         Get Client_Id to hoClient
                         Send Activate_sala of hoClient
+                    End_Procedure
+                End_Object
+
+                Object ocafeMenuItem is a cCJMenuItem
+                    Set psCaption to "Espa‡os Para Caf‚"
+                    Set psTooltip to "cafe"
+                
+                    Procedure OnExecute Variant vCommandBarControl
+                        Handle hoClient
+                        Get Client_Id to hoClient
+                        Send Activate_cafe of hoClient
                     End_Procedure
                 End_Object
             End_Object
@@ -334,6 +346,7 @@ Object oMain is a Panel
         Use StdAbout.pkg
         Use alunos.vw
         Use sala.vw
+        Use cafe.vw
 
         Procedure Activate_About
             Send DoAbout "" "" "" "" ""
