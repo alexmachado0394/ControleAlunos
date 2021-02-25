@@ -1,0 +1,45 @@
+Use DataDict.pkg
+
+Open ALUNOS
+
+Object Genero is a DescriptionValidationTable
+    Procedure Fill_List
+        Forward Send Fill_List
+        Send Add_Table_Value "M" "Masculino"
+        Send Add_Table_Value "F" "Feminino"
+        Send Add_Table_Value "O" "Outros"
+    End_Procedure
+End_Object
+
+Register_Object aluno_sl
+
+Class cALUNOSDataDictionary is a DataDictionary
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set Main_File to ALUNOS.File_Number
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_KEYFIELD DD_AUTOFIND to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOENTER to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+
+        Set Field_Option Field ALUNOS.CODALU DD_AUTOFIND to True
+        Set Key_Field_State Field ALUNOS.CODALU to True
+        Set Field_Prompt_Object Field ALUNOS.CODALU to aluno_sl
+
+        Set Field_Option Field ALUNOS.NOME DD_CAPSLOCK to True
+        Set Field_Option Field ALUNOS.NOME DD_REQUIRED to True
+
+        Set Field_Option Field ALUNOS.SOBRENOME DD_CAPSLOCK to True
+        Set Field_Option Field ALUNOS.SOBRENOME DD_REQUIRED to True
+
+        Set Field_Value_Table Field ALUNOS.GENERO to Genero
+
+    End_Procedure
+
+End_Class
+
+#IFDEF Is$WebApp
+#ELSE
+Use aluno.sl
+#ENDIF

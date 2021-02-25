@@ -1,0 +1,14 @@
+Use DataDict.pkg
+
+Open TABELAID
+
+Class cTABELAIDDataDictionary is a DataDictionary
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set Main_File to TABELAID.File_Number
+        Set Key_Field_State Field TABELAID.NUMTAB to True
+
+    End_Procedure
+
+End_Class
