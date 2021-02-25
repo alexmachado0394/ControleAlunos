@@ -1,6 +1,7 @@
 Use DataDict.pkg
 
 Open ALUNOS
+Open SYSTEM
 
 Object Genero is a DescriptionValidationTable
     Procedure Fill_List
@@ -18,6 +19,8 @@ Class cALUNOSDataDictionary is a DataDictionary
     Procedure Construct_Object
         Forward Send Construct_Object
         Set Main_File to ALUNOS.File_Number
+
+        Set Add_System_File to SYSTEM.File_Number DD_Lock_On_All
         Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
         Set Foreign_Field_Option DD_KEYFIELD DD_AUTOFIND to True
         Set Foreign_Field_Option DD_INDEXFIELD DD_NOENTER to True
@@ -26,6 +29,7 @@ Class cALUNOSDataDictionary is a DataDictionary
         Set Field_Option Field ALUNOS.CODALU DD_AUTOFIND to True
         Set Key_Field_State Field ALUNOS.CODALU to True
         Set Field_Prompt_Object Field ALUNOS.CODALU to aluno_sl
+        Set Field_Auto_Increment Field ALUNOS.CODALU to File_Field SYSTEM.ULTIMOALUNO
 
         Set Field_Option Field ALUNOS.NOME DD_CAPSLOCK to True
         Set Field_Option Field ALUNOS.NOME DD_REQUIRED to True

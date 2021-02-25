@@ -11,5 +11,27 @@
 				</DDClass>
 			</DDClasses>
 		</Table>
+		<Table>
+			<tableNumber>3</tableNumber>
+			<tableName>SALAS</tableName>
+			<DDClasses>
+				<DDClass>
+					<className>cSALASDataDictionary</className>
+					<classFile>cSALASDataDictionary.dd</classFile>
+					<preferred>true</preferred>
+				</DDClass>
+			</DDClasses>
+		</Table>
+		<Table>
+			<tableNumber>4</tableNumber>
+			<tableName>CAFE</tableName>
+			<DDClasses>
+				<DDClass>
+					<className>cCAFEDataDictionary</className>
+					<classFile>cCAFEDataDictionary.dd</classFile>
+					<preferred>true</preferred>
+				</DDClass>
+			</DDClasses>
+		</Table>
 	</Tables>
 </DataDictionaryList>

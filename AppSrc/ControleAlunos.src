@@ -24,7 +24,7 @@ Use oDEOEditContextMenu17.pkg
 Object oMain is a Panel
     Set Label to "Controle Alunos"
     Set Location to 4 3
-    Set Size to 379 691
+    Set Size to 366 691
 
     Object oCommandBarSystem is a cCJCommandBarSystem
         Set pbTimerUpdate to True
@@ -108,6 +108,17 @@ Object oMain is a Panel
                         Handle hoClient
                         Get Client_Id to hoClient
                         Send Activate_alunos of hoClient
+                    End_Procedure
+                End_Object
+
+                Object osalaMenuItem is a cCJMenuItem
+                    Set psCaption to "Cadastro Salas"
+                    Set psTooltip to "sala"
+                
+                    Procedure OnExecute Variant vCommandBarControl
+                        Handle hoClient
+                        Get Client_Id to hoClient
+                        Send Activate_sala of hoClient
                     End_Procedure
                 End_Object
             End_Object
@@ -322,6 +333,7 @@ Object oMain is a Panel
     Object oClientArea is a ClientArea
         Use StdAbout.pkg
         Use alunos.vw
+        Use sala.vw
 
         Procedure Activate_About
             Send DoAbout "" "" "" "" ""
