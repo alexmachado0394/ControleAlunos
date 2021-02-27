@@ -2,6 +2,7 @@ Use DataDict.pkg
 
 Open SALAS
 Open SYSTEM
+Open PESSOASSALA
 
 Register_Object sala_sl
 
@@ -10,6 +11,8 @@ Class cSALASDataDictionary is a DataDictionary
     Procedure Construct_Object
         Forward Send Construct_Object
         Set Main_File to SALAS.File_Number
+
+        Set Add_Client_File to PESSOASSALA.File_Number
 
         Set Add_System_File to SYSTEM.File_Number DD_Lock_On_All
         Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
@@ -24,8 +27,6 @@ Class cSALASDataDictionary is a DataDictionary
 
         Set Field_Option Field SALAS.DESCRICAO DD_CAPSLOCK to True
         Set Field_Option Field SALAS.DESCRICAO DD_REQUIRED to True
-
-        Set Field_Option Field SALAS.LOTACAO DD_REQUIRED to True
 
     End_Procedure
 

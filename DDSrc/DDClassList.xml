@@ -33,5 +33,27 @@
 				</DDClass>
 			</DDClasses>
 		</Table>
+		<Table>
+			<tableNumber>5</tableNumber>
+			<tableName>PESSOASSALA</tableName>
+			<DDClasses>
+				<DDClass>
+					<className>cPESSOASSALADataDictionary</className>
+					<classFile>cPESSOASSALADataDictionary.dd</classFile>
+					<preferred>true</preferred>
+				</DDClass>
+			</DDClasses>
+		</Table>
+		<Table>
+			<tableNumber>6</tableNumber>
+			<tableName>PESSOASCAFE</tableName>
+			<DDClasses>
+				<DDClass>
+					<className>cPESSOASCAFEDataDictionary</className>
+					<classFile>cPESSOASCAFEDataDictionary.dd</classFile>
+					<preferred>true</preferred>
+				</DDClass>
+			</DDClasses>
+		</Table>
 	</Tables>
 </DataDictionaryList>

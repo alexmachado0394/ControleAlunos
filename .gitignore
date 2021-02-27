@@ -15,14 +15,6 @@
 **/appsrc/**/*.prn
 **/appsrc/**/*.prp
 
-# Data
-**/data/**/*.log
-**/data/**/*.dat
-**/data/**/*.vld
-**/data/**/*.k*
-**/data/**/*.bad
-**/data/**/*.hdr
-**/data/**/*.cch
 
 # DDSrc
 **/ddsrc/**/*.def

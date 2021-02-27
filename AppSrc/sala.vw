@@ -23,23 +23,18 @@ Object sala is a dbView
         Set pbGrayIfDisable to False
         Set peAnchors to anAll
         Set peHorizontalGridStyle to xtpGridNoLines
+        Set pbUseAlternateRowBackgroundColor to True
 
         Object oSALAS_CODIGO is a cDbCJGridColumn
             Entry_Item SALAS.CODIGO
-            Set piWidth to 59
+            Set piWidth to 65
             Set psCaption to "C¢digo"
         End_Object
 
         Object oSALAS_DESCRICAO is a cDbCJGridColumn
             Entry_Item SALAS.DESCRICAO
-            Set piWidth to 367
+            Set piWidth to 347
             Set psCaption to "Descri‡Æo"
-        End_Object
-
-        Object oSALAS_LOTACAO is a cDbCJGridColumn
-            Entry_Item SALAS.LOTACAO
-            Set piWidth to 83
-            Set psCaption to "Lota‡Æo M x."
         End_Object
     End_Object
 

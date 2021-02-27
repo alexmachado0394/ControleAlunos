@@ -2,6 +2,9 @@ Use DataDict.pkg
 
 Open ALUNOS
 Open SYSTEM
+Open PESSOASSALA
+Open PESSOASCAFE
+Open SALAS
 
 Object Genero is a DescriptionValidationTable
     Procedure Fill_List
@@ -20,7 +23,12 @@ Class cALUNOSDataDictionary is a DataDictionary
         Forward Send Construct_Object
         Set Main_File to ALUNOS.File_Number
 
+        Set Add_Client_File to PESSOASSALA.File_Number
+        Set Add_Client_File to PESSOASCAFE.File_Number
+
         Set Add_System_File to SYSTEM.File_Number DD_Lock_On_All
+        Set Add_System_File to PESSOASSALA.File_Number DD_Lock_On_All
+        Set Add_System_File to SALAS.File_Number DD_Lock_On_All
         Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
         Set Foreign_Field_Option DD_KEYFIELD DD_AUTOFIND to True
         Set Foreign_Field_Option DD_INDEXFIELD DD_NOENTER to True

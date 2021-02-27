@@ -21,23 +21,19 @@ Object cafe is a dbView
         Set Size to 100 295
         Set Location to 2 3
         Set peHorizontalGridStyle to xtpGridNoLines
+        Set pbUseAlternateRowBackgroundColor to True
+        Set peAnchors to anAll
 
         Object oCAFE_CODIGO is a cDbCJGridColumn
             Entry_Item CAFE.CODIGO
-            Set piWidth to 54
+            Set piWidth to 60
             Set psCaption to "C¢digo"
         End_Object
 
         Object oCAFE_DESCRICAO is a cDbCJGridColumn
             Entry_Item CAFE.DESCRICAO
-            Set piWidth to 372
+            Set piWidth to 354
             Set psCaption to "Descri‡Æo"
-        End_Object
-
-        Object oCAFE_LOTACAO is a cDbCJGridColumn
-            Entry_Item CAFE.LOTACAO
-            Set piWidth to 90
-            Set psCaption to "Lota‡Æo Max."
         End_Object
     End_Object
 

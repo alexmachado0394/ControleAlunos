@@ -1,0 +1,22 @@
+Use DataDict.pkg
+
+Open PESSOASCAFE
+Open CAFE
+Open ALUNOS
+
+Class cPESSOASCAFEDataDictionary is a DataDictionary
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set Main_File to PESSOASCAFE.File_Number
+
+        Set Add_Server_File to CAFE.File_Number
+        Set Add_Server_File to ALUNOS.File_Number
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_KEYFIELD DD_AUTOFIND to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOENTER to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+
+    End_Procedure
+
+End_Class

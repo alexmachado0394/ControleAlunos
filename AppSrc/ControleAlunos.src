@@ -135,11 +135,21 @@ Object oMain is a Panel
                 End_Object
             End_Object
             
-            Object oReportMenu is a cCJMenuItem
+            Object oSecretariaMenu is a cCJMenuItem
                 Set peControlType to xtpControlPopup          
-                Set psCaption to "&Report"
-                Set psToolTip to "Report"
-                Set psDescription to "Available Reports"
+                Set psCaption to "&Secret ria"
+                Set psToolTip to "Secret ria"
+
+                Object ogeraturmasMenuItem is a cCJMenuItem
+                    Set psCaption to "Gerar Turmas"
+                    Set psTooltip to "gera_turmas"
+                
+                    Procedure OnExecute Variant vCommandBarControl
+                        Handle hoClient
+                        Get Client_Id to hoClient
+                        Send Activate_gera_turmas of hoClient
+                    End_Procedure
+                End_Object
             End_Object
 
             Object oNavigateMenu is a cCJMenuItem
@@ -347,6 +357,7 @@ Object oMain is a Panel
         Use alunos.vw
         Use sala.vw
         Use cafe.vw
+        Use gera_turmas.vw
 
         Procedure Activate_About
             Send DoAbout "" "" "" "" ""

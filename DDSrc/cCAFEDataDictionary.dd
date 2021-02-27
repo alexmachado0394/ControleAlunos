@@ -2,6 +2,7 @@ Use DataDict.pkg
 
 Open CAFE
 Open SYSTEM
+Open PESSOASCAFE
 
 Register_Object cafe_sl
 
@@ -10,6 +11,8 @@ Class cCAFEDataDictionary is a DataDictionary
     Procedure Construct_Object
         Forward Send Construct_Object
         Set Main_File to CAFE.File_Number
+
+        Set Add_Client_File to PESSOASCAFE.File_Number
 
         Set Add_System_File to SYSTEM.File_Number DD_Lock_On_All
         Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
@@ -24,8 +27,6 @@ Class cCAFEDataDictionary is a DataDictionary
 
         Set Field_Option Field CAFE.DESCRICAO DD_CAPSLOCK to True
         Set Field_Option Field CAFE.DESCRICAO DD_REQUIRED to True
-
-        Set Field_Option Field CAFE.LOTACAO DD_REQUIRED to True
 
     End_Procedure
 

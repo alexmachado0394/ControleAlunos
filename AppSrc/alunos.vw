@@ -1,23 +1,57 @@
 Use Windows.pkg
 Use DFClient.pkg
 Use cALUNOSDataDictionary.dd
+Use cCAFEDataDictionary.dd
+Use cPESSOASCAFEDataDictionary.dd
+Use cSALASDataDictionary.dd
+Use cPESSOASSALADataDictionary.dd
 Use DFEntry.pkg
 Use dfTabDlg.pkg
 Use cDbCJGrid.pkg
+Use cdbCJGridColumn.pkg
 
 Deferred_View Activate_alunos for ;
 Object alunos is a dbView
+    
+//    Procedure Request_Save
+//        Forward Send Request_Save
+//        Integer iCodSala iCodalu iEtapa
+//        
+//        
+//    End_Procedure
+    
+    
+    
+    
+    Object oSALAS_DD is a cSALASDataDictionary
+    End_Object
+
+    Object oCAFE_DD is a cCAFEDataDictionary
+    End_Object
+
     Object oALUNOS_DD is a cALUNOSDataDictionary
+    End_Object
+
+    Object oPESSOASSALA_DD is a cPESSOASSALADataDictionary
+        Set Constrain_file to ALUNOS.File_number
+        Set DDO_Server to oALUNOS_DD
+        Set DDO_Server to oSALAS_DD
+    End_Object
+
+    Object oPESSOASCAFE_DD is a cPESSOASCAFEDataDictionary
+        Set Constrain_file to ALUNOS.File_number
+        Set DDO_Server to oALUNOS_DD
+        Set DDO_Server to oCAFE_DD
     End_Object
 
     Set Main_DD to oALUNOS_DD
     Set Server to oALUNOS_DD
 
     Set Border_Style to Border_Thick
-    Set Size to 221 358
+    Set Size to 162 358
     Set Location to 20 25
     Set Label to "ALUNOS"
-    Set piMinSize to 221 358
+    Set piMinSize to 158 358
 
     Object oALUNOS_CODALU is a dbForm
         Entry_Item ALUNOS.CODALU
@@ -38,7 +72,7 @@ Object alunos is a dbView
                     If Found Begin
                         Move SYSTEM.ULTIMOALUNO to iCodigo
                         Move (iCodigo+1) to iCodigo
-                        Set Field_Changed_Value of oALUNOS_DD Field ALUNOS.CODALU to iCodigo
+                        Set Field_Default_Value of oALUNOS_DD Field ALUNOS.CODALU to iCodigo
                     End
                 End
             End
@@ -93,32 +127,70 @@ Object alunos is a dbView
         End_Procedure
     End_Object
 
-    Object oTabInformacao is a dbTabDialog
-        Set Size to 150 345
-        Set Location to 73 9
-    
-        Set Rotate_Mode to RM_Rotate
+    Object oDbGroupSala is a dbGroup
+        Set Size to 80 162
+        Set Location to 78 10
+        Set Label to "Sala"
 
-        Object oDbTabSalas is a dbTabPage
-            Set Label to "Salas de Aula"
+        Object oGridSala is a cDbCJGrid
+            Set Server to oPESSOASSALA_DD
+            Set Size to 65 154
+            Set Location to 10 4
+            Set peHorizontalGridStyle to xtpGridNoLines
+            Set pbReadOnly to True
+            Set Focus_Mode to NonFocusable
+            Set Ordering to 1
 
-            Object oGridSalas is a cDbCJGrid
-                Set Size to 132 338
-                Set Location to 2 1
-                Set pbReadOnly to True
+            Object oPESSOASSALA_ETAPA is a cDbCJGridColumn
+                Entry_Item PESSOASSALA.ETAPA
+                Set piWidth to 46
+                Set psCaption to "Etapa"
+            End_Object
+
+            Object oPESSOASSALA_CODSAL is a cDbCJGridColumn
+                Entry_Item SALAS.CODIGO
+                Set piWidth to 34
+                Set psCaption to "Sala"
+            End_Object
+
+            Object oSALAS_DESCRICAO is a cDbCJGridColumn
+                Entry_Item SALAS.DESCRICAO
+                Set piWidth to 189
             End_Object
         End_Object
+    End_Object
 
-        Object oDbTabEspaco is a dbTabPage
-            Set Label to "Espa‡os de Caf‚"
+    Object oDbGroupCafe is a dbGroup
+        Set Size to 80 162
+        Set Location to 78 181
+        Set Label to "Caf‚"
 
-            Object oGridCafe is a cDbCJGrid
-                Set Size to 129 334
-                Set Location to 3 3
-                Set pbReadOnly to True
+        Object oGridCafe is a cDbCJGrid
+            Set Server to oPESSOASCAFE_DD
+            Set Size to 65 154
+            Set Location to 9 5
+            Set pbReadOnly to True
+            Set peHorizontalGridStyle to xtpGridNoLines
+            Set Focus_Mode to NonFocusable
+            Set Ordering to 1
+
+            Object oPESSOASCAFE_ETAPA is a cDbCJGridColumn
+                Entry_Item PESSOASCAFE.ETAPA
+                Set piWidth to 37
+                Set psCaption to "Etapa"
+            End_Object
+
+            Object oPESSOASCAFE_CODCAF is a cDbCJGridColumn
+                Entry_Item CAFE.CODIGO
+                Set piWidth to 46
+                Set psCaption to "Espa‡o"
+            End_Object
+
+            Object oCAFE_DESCRICAO is a cDbCJGridColumn
+                Entry_Item CAFE.DESCRICAO
+                Set piWidth to 186
             End_Object
         End_Object
-    
     End_Object
 
 Cd_End_Object
