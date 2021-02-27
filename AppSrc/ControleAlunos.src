@@ -150,6 +150,28 @@ Object oMain is a Panel
                         Send Activate_gera_turmas of hoClient
                     End_Procedure
                 End_Object
+
+                Object opessoasSalaMenuItem is a cCJMenuItem
+                    Set psCaption to "Consulta Sala Turmas"
+                    Set psTooltip to "pessoasSala"
+                
+                    Procedure OnExecute Variant vCommandBarControl
+                        Handle hoClient
+                        Get Client_Id to hoClient
+                        Send Activate_pessoasSala of hoClient
+                    End_Procedure
+                End_Object
+
+                Object opessoasCafeMenuItem is a cCJMenuItem
+                    Set psCaption to "Consulta Espa‡os de Caf‚"
+                    Set psTooltip to "pessoasCafe"
+                
+                    Procedure OnExecute Variant vCommandBarControl
+                        Handle hoClient
+                        Get Client_Id to hoClient
+                        Send Activate_pessoasCafe of hoClient
+                    End_Procedure
+                End_Object
             End_Object
 
             Object oNavigateMenu is a cCJMenuItem
@@ -358,6 +380,8 @@ Object oMain is a Panel
         Use sala.vw
         Use cafe.vw
         Use gera_turmas.vw
+        Use pessoasSala.vw
+        Use pessoasCafe.vw
 
         Procedure Activate_About
             Send DoAbout "" "" "" "" ""

@@ -21,9 +21,8 @@ Object gera_turmas is a dbView
         // OnProcess is a predefined method in the BusinessProcess class.
         Procedure OnProcess
             Boolean bFim bFim2
-            Integer iLimCaf iLimSal iLotamin iSala iLotacao iDx
+            Integer iLimSal iEtapa1 iSala iLotacao iDx
             
-            Move 0 to iLotamin
             //Limpar turmas existentes
             Clear PESSOASSALA
             Move False to bFim
@@ -79,7 +78,6 @@ Object gera_turmas is a dbView
             Find ge SYSTEM by recnum
             If Found Begin
                 Move (SYSTEM.ULTIMOALUNO/SYSTEM.ULTIMASALA) to iLimSal
-                Move (SYSTEM.ULTIMOALUNO/SYSTEM.ULTIMOCAFE) to iLimCaf
             End
             
             //monta a composi‡Æo das turmas da 1¦ etapa
@@ -134,7 +132,6 @@ Object gera_turmas is a dbView
             Until bFim    
             
             //monta as turmas dos espa‡os de caf‚
-            Move 0 to iLotamin
             Clear ALUNOS
             Move False to bFim
             Repeat
@@ -187,6 +184,85 @@ Object gera_turmas is a dbView
                 End
                 Else Move True to bFim
             Until bFim    
+            
+            
+            //Monta as turmas da 2¦ etapa
+            Clear ALUNOS
+            Move False to bFim
+            Repeat
+                Find gt ALUNOS by Index.1
+                If Found Begin
+                   //verifica qual sala o aluno estava na 1¦ etapa
+                   Clear PESSOASSALA
+                   Move ALUNOS.CODALU to PESSOASSALA.CODALU
+                   Move 1 to PESSOASSALA.ETAPA
+                   Find eq PESSOASSALA by Index.1
+                   If ((Found) and (ALUNOS.CODALU=PESSOASSALA.CODALU) and (PESSOASSALA.ETAPA=1)) Begin
+                      Move PESSOASSALA.CODSAL to iEtapa1
+                   End
+                   
+                   //Verifica qual a sala com menos pessoas
+                   Clear SALAS
+                   Move False to bFim2
+                   Repeat
+                    Find gt SALAS by Index.1
+                    If Found Begin
+                        Move SALAS.LOTACAO2 to iLotacao
+                    End
+                    Else Move True to bFim2
+                   Until bFim2
+                   
+                   //escolhe a sala com menos pessoas
+                   If (Mod(ALUNOS.CODALU,2)<>0) Begin
+                       Clear SALAS
+                       Move False to bFim2
+                       Repeat
+                        Find gt SALAS by Index.1
+                        If Found Begin
+                            If (iLotacao>=SALAS.LOTACAO2) Begin
+                                Move SALAS.CODIGO to iSala
+                                Move True to bFim2
+                            End
+                        End
+                        Else Move True to bFim2
+                       Until bFim2
+                   End
+                   Else Begin
+                      Clear SALAS
+                      Move False to bFim2
+                      Repeat
+                       Find gt SALAS by Index.1
+                       If Found Begin
+                          If (iLotacao>=SALAS.LOTACAO2) Begin
+                             If (iEtapa1<>SALAS.CODIGO) Begin
+                                Move SALAS.CODIGO to iSala
+                                Move True to bFim2
+                             End
+                          End
+                       End
+                       Else Move True to bFim2
+                      Until bFim2
+                   End
+                   
+                   //Atualiza PESSOASSALA e o SALAS
+                   Clear PESSOASSALA
+                   Move ALUNOS.CODALU to PESSOASSALA.CODALU
+                   Move 2 to PESSOASSALA.ETAPA
+                   Move iSala to PESSOASSALA.CODSAL
+                   SaveRecord PESSOASSALA
+                   
+                   Clear SALAS
+                   Move iSala to SALAS.CODIGO
+                   Find eq SALAS by Index.1
+                   If Found Begin
+                       Reread SALAS
+                       Move (SALAS.LOTACAO2+1) to SALAS.LOTACAO2
+                       SaveRecord SALAS
+                       Unlock
+                   End
+                End
+                Else Move True to bFim
+            Until bFim
             
         End_Procedure
     
