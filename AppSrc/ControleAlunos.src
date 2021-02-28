@@ -101,17 +101,6 @@ Object oMain is a Panel
                 Set psToolTip to "Cadastros"
                 Set psDescription to "Available Views"
 
-                Object oalunosMenuItem is a cCJMenuItem
-                    Set psCaption to "Alunos"
-                    Set psTooltip to "alunos"
-                
-                    Procedure OnExecute Variant vCommandBarControl
-                        Handle hoClient
-                        Get Client_Id to hoClient
-                        Send Activate_alunos of hoClient
-                    End_Procedure
-                End_Object
-
                 Object osalaMenuItem is a cCJMenuItem
                     Set psCaption to "Salas"
                     Set psTooltip to "sala"
@@ -120,6 +109,17 @@ Object oMain is a Panel
                         Handle hoClient
                         Get Client_Id to hoClient
                         Send Activate_sala of hoClient
+                    End_Procedure
+                End_Object
+
+                Object oalunosMenuItem is a cCJMenuItem
+                    Set psCaption to "Alunos"
+                    Set psTooltip to "alunos"
+                
+                    Procedure OnExecute Variant vCommandBarControl
+                        Handle hoClient
+                        Get Client_Id to hoClient
+                        Send Activate_alunos of hoClient
                     End_Procedure
                 End_Object
 
