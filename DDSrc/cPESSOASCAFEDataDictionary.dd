@@ -16,6 +16,7 @@ Class cPESSOASCAFEDataDictionary is a DataDictionary
         Set Foreign_Field_Option DD_KEYFIELD DD_AUTOFIND to True
         Set Foreign_Field_Option DD_INDEXFIELD DD_NOENTER to True
         Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+        Set Cascade_Delete_State to False
 
     End_Procedure
 

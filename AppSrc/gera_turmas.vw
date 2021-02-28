@@ -6,9 +6,10 @@ Deferred_View Activate_gera_turmas for ;
 Object gera_turmas is a dbView
 
     Set Border_Style to Border_Thick
-    Set Size to 200 300
+    Set Size to 54 313
     Set Location to 18 59
     Set Label to "GERA€ÇO TURMAS"
+    Set piMinSize to 54 313
 
     Object oGeraTurma is a BusinessProcess
     
@@ -24,25 +25,9 @@ Object gera_turmas is a dbView
             Integer iLimSal iEtapa1 iSala iLotacao iDx
             
             //Limpar turmas existentes
-            Clear PESSOASSALA
-            Move False to bFim
-            Repeat
-             Find gt PESSOASSALA by Index.1
-             If Found Begin
-                Delete PESSOASSALA
-             End
-             Else Move True to bFim
-            Until bFim
+            ZeroFile PESSOASSALA
             
-            Clear PESSOASCAFE
-            Move False to bFim
-            Repeat
-             Find gt PESSOASCAFE by Index.1
-             If Found Begin
-                Delete PESSOASCAFE
-             End
-             Else Move True to bFim
-            Until bFim
+            ZeroFile PESSOASCAFE
             
             Clear SALAS
             Move False to bFim
@@ -77,7 +62,7 @@ Object gera_turmas is a dbView
             Clear SYSTEM
             Find ge SYSTEM by recnum
             If Found Begin
-                Move (SYSTEM.ULTIMOALUNO/SYSTEM.ULTIMASALA) to iLimSal
+                Move (SYSTEM.PESOASCADASTRADAS/SYSTEM.SALASCADASTRADAS) to iLimSal
             End
             
             //monta a composi‡Æo das turmas da 1¦ etapa
@@ -86,26 +71,19 @@ Object gera_turmas is a dbView
             Repeat
                 Find gt ALUNOS by Index.1
                 If Found Begin
-                   //Verifica qual a sala com menos pessoas
+                   Move 0 to iSala
+                   Move 0 to iLotacao
+                   //Verifica qual a sala com menos pessoas e adiciona a pessoa a essa sala
                    Clear SALAS
                    Move False to bFim2
                    Repeat
                     Find gt SALAS by Index.1
                     If Found Begin
-                        Move SALAS.LOTACAO1 to iLotacao
-                    End
-                    Else Move True to bFim2
-                   Until bFim2
-                   
-                   //escolhe a sala com menos pessoas
-                   Clear SALAS
-                   Move False to bFim2
-                   Repeat
-                    Find gt SALAS by Index.1
-                    If Found Begin
-                        If (iLotacao>=SALAS.LOTACAO1) Begin
-                            Move SALAS.CODIGO to iSala
-                            Move True to bFim2
+                        If ((iSala=0) or (SALAS.LOTACAO1<iLotacao)) Begin
+                            If ((SALAS.LOTACAO1+1)<=SALAS.CAPACIDADE) Begin
+                                Move SALAS.CODIGO to iSala
+                                Move SALAS.LOTACAO1 to iLotacao
+                            End
                         End
                     End
                     Else Move True to bFim2
@@ -137,26 +115,17 @@ Object gera_turmas is a dbView
             Repeat
                 Find gt ALUNOS by Index.1
                 If Found Begin
-                   //Verifica qual a sala com menos pessoas
+                   Move 0 to iSala
+                   Move 0 to iLotacao
+                   //Verifica qual o espa‡o com menos pessoas e adiciona a pessoa a esse espa‡o
                    Clear CAFE
                    Move False to bFim2
                    Repeat
                     Find gt CAFE by Index.1
                     If Found Begin
-                        Move CAFE.LOTACAO1 to iLotacao
-                    End
-                    Else Move True to bFim2
-                   Until bFim2
-                   
-                   //escolhe a sala da pessoa
-                   Clear CAFE
-                   Move False to bFim2
-                   Repeat
-                    Find gt CAFE by Index.1
-                    If Found Begin
-                        If (iLotacao>=CAFE.LOTACAO1) Begin
+                        If ((iSala=0) or (CAFE.LOTACAO1<iLotacao)) Begin
                             Move CAFE.CODIGO to iSala
-                            Move True to bFim2
+                            Move CAFE.LOTACAO1 to iLotacao
                         End
                     End
                     Else Move True to bFim2
@@ -201,17 +170,8 @@ Object gera_turmas is a dbView
                       Move PESSOASSALA.CODSAL to iEtapa1
                    End
                    
-                   //Verifica qual a sala com menos pessoas
-                   Clear SALAS
-                   Move False to bFim2
-                   Repeat
-                    Find gt SALAS by Index.1
-                    If Found Begin
-                        Move SALAS.LOTACAO2 to iLotacao
-                    End
-                    Else Move True to bFim2
-                   Until bFim2
-                   
+                   Move 0 to iLotacao
+                   Move 0 to iSala
                    //escolhe a sala com menos pessoas
                    If (Mod(ALUNOS.CODALU,2)<>0) Begin
                        Clear SALAS
@@ -219,9 +179,11 @@ Object gera_turmas is a dbView
                        Repeat
                         Find gt SALAS by Index.1
                         If Found Begin
-                            If (iLotacao>=SALAS.LOTACAO2) Begin
-                                Move SALAS.CODIGO to iSala
-                                Move True to bFim2
+                            If ((iSala=0) or (SALAS.LOTACAO2<iLotacao)) Begin
+                                If ((SALAS.LOTACAO2+1)<=SALAS.CAPACIDADE) Begin
+                                    Move SALAS.CODIGO to iSala
+                                    Move SALAS.LOTACAO2 to iLotacao
+                                End
                             End
                         End
                         Else Move True to bFim2
@@ -233,12 +195,12 @@ Object gera_turmas is a dbView
                       Repeat
                        Find gt SALAS by Index.1
                        If Found Begin
-                          If (iLotacao>=SALAS.LOTACAO2) Begin
-                             If (iEtapa1<>SALAS.CODIGO) Begin
+                          If (((iSala=0) or (iEtapa1<>iSala)) or (SALAS.LOTACAO2<iLotacao)) Begin
+                            If ((SALAS.LOTACAO2+1)<=SALAS.CAPACIDADE) Begin
                                 Move SALAS.CODIGO to iSala
-                                Move True to bFim2
-                             End
-                          End
+                                Move SALAS.LOTACAO1 to iLotacao
+                            End
+                        End
                        End
                        Else Move True to bFim2
                       Until bFim2
@@ -264,13 +226,15 @@ Object gera_turmas is a dbView
                 Else Move True to bFim
             Until bFim
             
+            Send Info_Box "Processo conclu¡do!" "AVISO"
+            
         End_Procedure
     
     End_Object
 
     Object oButtonGerar is a Button
         Set Size to 20 100
-        Set Location to 161 4
+        Set Location to 14 7
         Set Label to "Gerar Turmas"
         Set FontWeight to fw_Bold
         Set Typeface to "ARIAL"
@@ -280,20 +244,46 @@ Object gera_turmas is a dbView
         // fires when the button is clicked
         Procedure OnClick
             Integer iResp
-            Get YesNo_Box "Confirma a gera‡Æo de novas turmas?" "ATEN€ÇO" to iResp
-            If (iResp=MBR_Yes) Send DoProcess of oGeraTurma
-            Else Begin
-               Send Stop_Box "Processo cancelado pelo usu rio" "ATEN€ÇO"
-               Send Close_Panel
+            Boolean bContinua
+            Move False to bContinua
+            Clear SALAS
+            Find gt SALAS by Index.1
+            If Found Begin
+                Move True to bContinua
             End
+            Else Begin
+               Send Stop_Box "NÆo h  Salas cadastradas, processo cancelado" "ATEN€ÇO"
+               Move False to bContinua
+            End
+            
+            If bContinua Begin
+                Move False to bContinua
+                Clear CAFE
+                Find gt CAFE by Index.1
+                If Found Begin
+                    Move True to bContinua
+                End
+                Else Begin
+                   Send Stop_Box "NÆo h  Espa‡os de caf‚ cadastrados, processo cancelado" "ATEN€ÇO"
+                   Move False to bContinua
+                End
+            End
+            If bContinua Begin
+                Get YesNo_Box "Confirma a gera‡Æo de novas turmas?\nEsse processo ir  apagar as turmas existentes." "ATEN€ÇO" MB_DEFBUTTON2 to iResp
+                If (iResp=MBR_Yes) Send DoProcess of oGeraTurma
+                Else Begin
+                   Send Stop_Box "Processo cancelado pelo usu rio" "ATEN€ÇO"
+                End
+            End
+            Send Close_Panel
         End_Procedure
     
     End_Object
 
     Object oButtonSair is a Button
         Set Size to 20 65
-        Set Location to 161 185
-        Set Label to "Sair sem Gerar"
+        Set Location to 14 187
+        Set Label to "Fechar"
         Set FontPointHeight to 15
         Set FontWeight to fw_Bold
         Set Typeface to "ARIAL"
@@ -303,34 +293,6 @@ Object gera_turmas is a dbView
            Send Close_Panel            
         End_Procedure
     
-    End_Object
-
-    Object oTextBox1 is a TextBox
-        Set Size to 9 33
-        Set Location to 5 102
-        Set Label to "ATEN€ÇO!"
-        Set FontPointHeight to 25
-        Set FontWeight to fw_Bold
-    End_Object
-
-    Object oTextBox2 is a TextBox
-        Set Auto_Size_State to False
-        Set Size to 25 158
-        Set Location to 37 3
-        Set Label to "ESSE PROCESSO IRµ APAGAR TODAS AS TURMAS MONTADAS E GERAR TURMAS NOVAS BAEADAS NA QUANTIDADE DE SALAS DISPONÖVEIS."
-        Set FontPointHeight to 16
-        Set FontWeight to fw_Bold
-        Set Justification_Mode to JMode_Center
-    End_Object
-
-    Object oTextBox3 is a TextBox
-        Set Auto_Size_State to False
-        Set Size to 25 158
-        Set Location to 89 3
-        Set Label to "ESSE PROCESSO  IRREVERSÖVEL, CONFIRME APENAS SE TIVER CERTEZA QUE DESEJA REALIZAR O MESMO!"
-        Set FontPointHeight to 16
-        Set FontWeight to fw_Bold
-        Set Justification_Mode to JMode_Center
     End_Object
 
 Cd_End_Object

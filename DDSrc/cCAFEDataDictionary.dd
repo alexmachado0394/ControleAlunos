@@ -28,6 +28,11 @@ Class cCAFEDataDictionary is a DataDictionary
         Set Field_Option Field CAFE.DESCRICAO DD_CAPSLOCK to True
         Set Field_Option Field CAFE.DESCRICAO DD_REQUIRED to True
 
+        Set Field_Option Field CAFE.LOTACAO1 DD_NOENTER to True
+
+        Set Field_Option Field CAFE.LOTACAO2 DD_NOENTER to True
+        Set Cascade_Delete_State to False
+
     End_Procedure
 
 End_Class

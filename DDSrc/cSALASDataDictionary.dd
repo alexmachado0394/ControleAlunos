@@ -28,6 +28,11 @@ Class cSALASDataDictionary is a DataDictionary
         Set Field_Option Field SALAS.DESCRICAO DD_CAPSLOCK to True
         Set Field_Option Field SALAS.DESCRICAO DD_REQUIRED to True
 
+        Set Field_Option Field SALAS.LOTACAO1 DD_NOENTER to True
+
+        Set Field_Option Field SALAS.LOTACAO2 DD_NOENTER to True
+        Set Cascade_Delete_State to False
+
     End_Procedure
 
 End_Class

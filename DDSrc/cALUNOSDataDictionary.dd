@@ -6,14 +6,14 @@ Open PESSOASSALA
 Open PESSOASCAFE
 Open SALAS
 
-Object Genero is a DescriptionValidationTable
-    Procedure Fill_List
-        Forward Send Fill_List
-        Send Add_Table_Value "M" "Masculino"
-        Send Add_Table_Value "F" "Feminino"
-        Send Add_Table_Value "O" "Outros"
-    End_Procedure
-End_Object
+//Object Genero is a DescriptionValidationTable
+//    Procedure Fill_List
+//        Forward Send Fill_List
+//        Send Add_Table_Value "M" "Masculino"
+//        Send Add_Table_Value "F" "Feminino"
+//        Send Add_Table_Value "O" "Outros"
+//    End_Procedure
+//End_Object
 
 Register_Object aluno_sl
 
@@ -44,6 +44,7 @@ Class cALUNOSDataDictionary is a DataDictionary
 
         Set Field_Option Field ALUNOS.SOBRENOME DD_CAPSLOCK to True
         Set Field_Option Field ALUNOS.SOBRENOME DD_REQUIRED to True
+        Set Cascade_Delete_State to False
 
     End_Procedure
 
